@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "nodemon --ext js --watch src"
+    "start": "node src/index.js",
+    "server:dev": "nodemon --ext js --watch src"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
