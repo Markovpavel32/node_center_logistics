@@ -49,17 +49,17 @@ module.exports = (app, client) => {
         e."Наименование" AS product_detail_name, 
         p."КоличествоПоЗаявке" AS quantity, 
         p."Количество"
-      FROM 
+        FROM 
         db."тчПрием" p, 
         db."Товары" t, 
         db."ЕдиницыТМЦ" e
-      WHERE 
+        WHERE 
         t."ид7" = p."ВидТМЦ" AND
         e."ид7" = p."Единица" AND
         p."Нст" != 0 AND 
         NOT p._del  AND 
         p."Владелец" = '${req.query.id}'
-      ORDER BY
+        ORDER BY
         p."Нст" ASC;`)
         .then(result => {
           res.json({ total: result.rows.length, result: result.rows })
@@ -72,15 +72,16 @@ module.exports = (app, client) => {
     '/application_log/appointment',
     checkAuth(),
     function (req, res) {
-      const { document_date, scheduled_date, document_number, document_lines, is_return, note } = req.body
+      const { document_date, scheduled_date, document_number, document_lines, is_return, note, need_delivery } = req.body
       const model = JSON.stringify({
         document_date,
         scheduled_date,
         document_number,
         document_lines,
         is_return,
+        need_delivery,
         note,
-        customer_id: req.user.customer_id
+        customer_id: req.user.customer_id,
       })
       client.query(`SELECT site.reception_for_storage('${model}');`)
         .then(result => {
