@@ -34,23 +34,23 @@ app.use(passport.session())
 passport.serializeUser((user, done) => done(null, user))
 passport.deserializeUser((user, done) => done(null, user))
 
-app.listen(process.env.PORT || config.port,
-  () => console.log(`Server start on port ${config.port} ...`))
-  const client = new Client({
-    host: '94.228.196.246',
-    port: 5434,
-    user: 'lk',
-    password: 'AJFGrLs6azpwE3k',
-    database: 'service'
-  })
+app.listen(process.env.PORT || config.port, () => console.log(`Server start on port ${config.port} ...`))
 
-  client.connect(err => {
-    if (err) {
-        console.error('connection error', err.stack)
-    } else {
-        console.log('connected')
-    }
-  })
+const client = new Client({
+  host: '94.228.196.246',
+  port: 5434,
+  user: 'lk',
+  password: 'AJFGrLs6azpwE3k',
+  database: 'service'
+})
+
+client.connect(err => {
+  if (err) {
+      console.error('connection error', err.stack)
+  } else {
+      console.log('connected')
+  }
+})
 require('./routes/authorization/login')(app, passport)
 require('./routes/authorization/registration')(app, User)
 require('./routes/reception_documents/index')(app, client)
